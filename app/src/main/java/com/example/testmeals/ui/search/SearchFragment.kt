@@ -1,22 +1,16 @@
  package com.example.testmeals.ui.search
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import com.example.testmeals.R
 import com.example.testmeals.ui.MainActivity
 import kotlinx.android.synthetic.main.fragment_search.*
-import java.util.EnumSet.of
-import java.util.Optional.of
+
 
 
  /**
