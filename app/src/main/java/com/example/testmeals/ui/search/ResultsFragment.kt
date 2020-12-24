@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.testmeals.R
 import com.example.testmeals.ui.MainActivity
 import kotlinx.android.synthetic.main.fragment_results.*
@@ -26,8 +27,7 @@ class ResultsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        recycler_view.adapter = HeaderAdapter(myViewModel.array)
-
+        recycler_view.adapter = HeaderAdapter(myViewModel.array, this)
     }
 
 

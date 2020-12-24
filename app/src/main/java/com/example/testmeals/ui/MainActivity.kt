@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.AttributeSet
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -37,7 +38,6 @@ class MainActivity : AppCompatActivity() {
             context: Context,
             attrs: AttributeSet
     ): View? {
-
         return super.onCreateView(parent, name, context, attrs)
     }
 
@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity() {
             nav_host_fragment.childFragmentManager.beginTransaction().
             replace(R.id.nav_host_fragment,ResultsFragment()).commit()
         })
+
 
 
 

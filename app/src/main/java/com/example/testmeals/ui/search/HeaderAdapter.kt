@@ -1,20 +1,23 @@
 package com.example.testmeals.ui.search
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.testmeals.R
 import kotlinx.android.synthetic.main.item_meal_result.view.*
 
-class HeaderAdapter(private val mealResultList: List<MealResultItem>): RecyclerView.Adapter<HeaderAdapter.HeaderViewHolder>() {
+class HeaderAdapter(private val mealResultList: List<MealResultItem>, private val fragment: Fragment): RecyclerView.Adapter<HeaderAdapter.HeaderViewHolder>() {
     /* ViewHolder for displaying header. */
     class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val imageView: ImageView = view.image_recycler
-        val str1: TextView = view.meal_title
-        val str2: TextView = view.meal_subtitle
+        val mealTitle: TextView = view.meal_title
+        val mealSubtitle: TextView = view.meal_subtitle
 
     }
 
@@ -26,10 +29,9 @@ class HeaderAdapter(private val mealResultList: List<MealResultItem>): RecyclerV
 
     override fun onBindViewHolder(holder: HeaderViewHolder, position: Int) {
         val currentItem = mealResultList[position]
-        //TODO: handle the image
- //       holder.imageView.setImageResource(currentItem.imageResource)
-        holder.str1.text = currentItem.str1
-        holder.str2.text = currentItem.str2
+        Glide.with(fragment).load(currentItem.imageResource).into(holder.imageView)
+        holder.mealTitle.text = currentItem.name
+        holder.mealSubtitle.text = currentItem.area + ", " + currentItem.category
     }
 
     override fun getItemCount(): Int = mealResultList.size

@@ -16,8 +16,13 @@ const val BASE_URL = "https://www.themealdb.com/api/json/v1/1/"
 interface TheMealDBApiService {
 
     @GET("search.php")
-    fun getMeal(
+    fun getMeals(
         @Query("s") meal:String
+    ) : Deferred<Meals>
+
+    @GET("filter.php")
+    fun getMealsFilteredByCategory(
+            @Query("c") category: String
     ) : Deferred<Meals>
 
     companion object {
