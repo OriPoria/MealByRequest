@@ -3,7 +3,8 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
 }
-
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
 android {
     compileSdkVersion 29
     buildToolsVersion "30.0.2"
@@ -36,7 +37,7 @@ android {
 androidExtensions {
     experimental = true
 }
-apply plugin: 'kotlin-kapt'
+
 
 dependencies {
     def nav_version = "2.3.1"
@@ -89,4 +90,10 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     kapt 'com.github.bumptech.glide:compiler:4.8.0'
+
+    // Dagger Hilt
+    implementation "com.google.dagger:hilt-android:$hiltVersion"
+    kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltAndroidXVersion"
+    kapt "androidx.hilt:hilt-compiler:$hiltAndroidXVersion"
 }

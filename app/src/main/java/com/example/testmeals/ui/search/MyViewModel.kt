@@ -1,6 +1,7 @@
 package com.example.testmeals.ui.search
 
 import android.util.Log
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.meals.database.Meal
 import com.example.testmeals.repository.MealsRepository
@@ -9,9 +10,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MyViewModel: ViewModel() {
+class MyViewModel @ViewModelInject constructor(
+    private val repository: MealsRepository)
+    : ViewModel() {
     
-    private val repository: MealsRepository = MealsRepositoryImpl()
     var listResult = MutableLiveData<List<MealResultItem>>()
     var category = MutableLiveData<String>()
     val array = ArrayList<MealResultItem>()
