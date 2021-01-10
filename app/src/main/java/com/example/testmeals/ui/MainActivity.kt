@@ -19,8 +19,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
-
     private val myViewModel: MyViewModel by viewModels()
     private lateinit var navController: NavController
     override fun onCreateView(
@@ -49,11 +47,9 @@ class MainActivity : AppCompatActivity() {
         })
 
 
-
-
-
-
     }
+
+
 
 
 }

@@ -2,6 +2,8 @@ package com.example.meals.network
 
 import com.example.meals.database.Meal
 import com.example.meals.database.Meals
+import com.example.testmeals.database.Categories
+import com.example.testmeals.database.Category
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred
 import okhttp3.Interceptor
@@ -24,6 +26,9 @@ interface TheMealDBApiService {
     fun getMealsFilteredByCategory(
             @Query("c") category: String
     ) : Deferred<Meals>
+
+    @GET("categories.php")
+    fun getCategories(): Deferred<Categories>
 
     companion object {
         operator fun invoke(

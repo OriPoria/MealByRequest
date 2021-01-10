@@ -1,20 +1,26 @@
  package com.example.testmeals.ui.search
 
-import android.app.Application
+
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
+import androidx.core.view.size
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.load.engine.executor.GlideExecutor.UncaughtThrowableStrategy.LOG
 import com.example.testmeals.R
+import com.example.testmeals.common.EndlessCycleOnScrollListener
+import com.example.testmeals.databinding.FragmentResultsBinding
+import com.example.testmeals.databinding.FragmentSearchBinding
 import com.example.testmeals.ui.MainActivity
+import kotlinx.android.synthetic.main.fragment_results.*
 import kotlinx.android.synthetic.main.fragment_search.*
-
 
 
  /**
@@ -23,6 +29,9 @@ import kotlinx.android.synthetic.main.fragment_search.*
  * create an instance of this fragment.
  */
 class SearchFragment(): Fragment() {
+     val TAG = "SearchFragment"
+     private var _binding: FragmentSearchBinding? = null
+     private val binding get() = _binding!!
 
      private val myViewModel: MyViewModel by lazy {
          return@lazy ViewModelProvider(activity as MainActivity).get(MyViewModel::class.java)
@@ -36,29 +45,36 @@ class SearchFragment(): Fragment() {
 
      override fun onActivityCreated(savedInstanceState: Bundle?) {
          super.onActivityCreated(savedInstanceState)
+         //change color button to black
+         button.setBackgroundColor(-16777216)
          button.setOnClickListener {
+             //test===============
+             myViewModel.setQuery(search_text.text.toString())
+             //test===============
+             //incorrect!!!
              myViewModel.getDataFromRepository()
          }
-         val adapter = this.context?.let {
-             ArrayAdapter(it, android.R.layout.simple_spinner_item,
-                     resources.getStringArray(R.array.search_options))
-         }
-         spinner.adapter = adapter
-
-         spinner.onItemSelectedListener  = object : AdapterView.OnItemSelectedListener {
-             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                myViewModel.category.value = parent?.getItemAtPosition(position).toString()
-             }
-
-             override fun onNothingSelected(parent: AdapterView<*>?) {
-                 Log.i("i", "onNothingSelected")
-             }
-
-         }
+         myViewModel.getCategoriesFromRepository()
+         val e = EndlessCycleOnScrollListener(categories_recycler_view)
+         myViewModel.categoriesListResult.observe(viewLifecycleOwner, {
+            Log.i(TAG, "IN observer")
+             categories_recycler_view.setHasFixedSize(true)
+             categories_recycler_view.adapter = CategoryAdapter(it, this)
+             categories_recycler_view.addOnScrollListener(e)
+             e.liveListSize.postValue(categories_recycler_view.adapter!!.itemCount)
+         })
 
      }
 
+//     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//         super.onViewCreated(view, savedInstanceState)
+//         val recyclerView = view.findViewById<RecyclerView>(R.id.categories_recycler_view)
+//         recyclerView.addOnScrollListener(EndlessCycleOnScrollListener(recyclerView))
+//     }
 
-
+     override fun onStop() {
+         super.onStop()
+         Log.d(TAG, "onStop")
+     }
 
 }
