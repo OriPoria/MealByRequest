@@ -1,8 +1,6 @@
 package com.example.testmeals.database
 
 import androidx.room.PrimaryKey
-import com.example.meals.database.Meal
-import com.google.gson.annotations.SerializedName
 
 data class Category(
     @PrimaryKey
@@ -13,5 +11,5 @@ data class Category(
 )
 
 data class Categories(
-        val categories: List<Category>
+    val categories: List<Category>
 )

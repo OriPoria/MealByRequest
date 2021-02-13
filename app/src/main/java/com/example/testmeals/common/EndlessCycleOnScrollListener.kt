@@ -9,16 +9,17 @@ class EndlessCycleOnScrollListener(recyclerView: RecyclerView) : RecyclerView.On
     private val TAG = "EndlessCycleOnScrollListener"
 
     val manager = recyclerView.layoutManager as LinearLayoutManager
-    var liveListSize = MutableLiveData<Int>(0)
+    var liveListSize = MutableLiveData<Int>()
 
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
         val listSize = liveListSize.value?.div(2)
         if (listSize != null) {
             val firstItemVisible = manager.findFirstVisibleItemPosition()
-            Log.d(TAG, firstItemVisible.toString())
+            if (listSize == 0) {
+                return
+            }
             if (firstItemVisible != 1 && firstItemVisible % listSize == 1) {
-                Log.d(TAG, "firstItemVisible != 1 && firstItemVisible % listSize == 1")
                 manager.scrollToPosition(1)
             }
             val firstCompletelyItemVisible = manager.findFirstCompletelyVisibleItemPosition()

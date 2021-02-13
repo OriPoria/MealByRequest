@@ -9,6 +9,10 @@ android {
     compileSdkVersion 29
     buildToolsVersion "30.0.2"
 
+    dataBinding {
+        enabled = true
+    }
+
     defaultConfig {
         applicationId "com.example.testmeals"
         minSdkVersion 29
@@ -100,4 +104,8 @@ dependencies {
     kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltAndroidXVersion"
     kapt "androidx.hilt:hilt-compiler:$hiltAndroidXVersion"
+
+    //Data binding
+    kapt "com.android.databinding:compiler:$android_plugin_version"
+
 }

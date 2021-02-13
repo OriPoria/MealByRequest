@@ -1,12 +1,8 @@
-package com.example.meals.database
+package com.example.testmeals.database
 
-import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
 
-
-@Entity(tableName = "meals_table")
-data class Meal(
+data class MealDetails(
     val dateModified: Any,
     @PrimaryKey
     val idMeal: String,
@@ -60,8 +56,5 @@ data class Meal(
     val strSource: Any,
     val strTags: String,
     val strYoutube: String
-)
 
-data class Meals(
-        val meals: List<Meal>
 )

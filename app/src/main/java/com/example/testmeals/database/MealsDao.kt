@@ -5,13 +5,13 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.meals.database.Meal
+import com.example.meals.database.MealItem
 
 @Dao
 interface MealsDao {
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    fun insert(meal: Meal)
+    fun insert(mealResult: MealItem)
 
     @Query("select * from meals_table where idMeal == :id")
-    fun getMeal(id: Int): LiveData<Meal>
+    fun getMeal(id: Int): LiveData<MealItem>
 }

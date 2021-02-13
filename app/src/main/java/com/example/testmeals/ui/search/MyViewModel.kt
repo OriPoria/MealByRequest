@@ -3,62 +3,72 @@ package com.example.testmeals.ui.search
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.example.meals.database.Meal
+import com.example.meals.database.MealItem
 import com.example.testmeals.common.NonNullLiveData
 import com.example.testmeals.repository.MealsRepository
 import androidx.lifecycle.MutableLiveData
+import com.example.testmeals.database.MealDetailsTest
 
-import com.example.testmeals.repository.MealsRepositoryImpl
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import com.example.testmeals.ui.list.ItemListCreator
+import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.Main
 
 class MyViewModel @ViewModelInject constructor(
     private val repository: MealsRepository)
     : ViewModel() {
-    val TAG = "MyViewModel"
+    private val TAG = "MyViewModel"
+
     var listResult = MutableLiveData<List<MealResultItem>>()
-    var category = MutableLiveData<String>()
-    val array = ArrayList<MealResultItem>()
-    private val categoriesArray = ArrayList<CategoryResultItem>()
+    private val array = ArrayList<MealResultItem>()
     val categoriesListResult = MutableLiveData<List<CategoryResultItem>>()
+    private val categoriesArray = ArrayList<CategoryResultItem>()
+    var category = MutableLiveData<String>()
+
+    lateinit var createViewItem: ItemListCreator<MealItem, MealResultItem>
+
 
     //test==========================
     private var query = NonNullLiveData("a")
     fun setQuery(str:String) {
-        Log.i("i","in set query")
         query.value = str
     }
     private var answer : LiveData<String> =  Transformations.switchMap(query, {test(it)})
     fun test(ss:String):LiveData<String> {
-        return MutableLiveData<String>(ss)
+        return MutableLiveData(ss)
     }
     val mw = answer.observeForever {
-        Log.i("i" , it)
+        Log.i(TAG , it)
     }
     //test===================================
 
-    fun getDataFromRepository() {
-        CoroutineScope(Dispatchers.Main).launch {
-            val myMealTest : LiveData<List<Meal>> = repository.getMealsByName(query.value)
-            array.clear()
-
-            myMealTest.observeForever {
-
-                for (meal in it) {
-                    val mealItem = MealResultItem(meal.strMealThumb,meal.strMeal, meal.strArea, meal.strCategory)
-                    array += mealItem
-                }
-            }
-            listResult.postValue(array)
+    fun getDataByName() = CoroutineScope(Main).launch {
+            getDataFromRepository(repository.getMealsByName(query.value))
         }
+    fun getDataByCategory() = CoroutineScope(Main).launch {
+        getDataFromRepository(repository.getMealsByCategory(query.value))
+    }
+
+
+
+    private fun getDataFromRepository(myMealResultTest: LiveData<List<MealItem>>) {
+        array.clear()
+        myMealResultTest.observeForever {
+            for (meal in it) {
+                val mealItem = createViewItem.create(meal)
+                array += mealItem
+            }
+        }
+        listResult.postValue(array)
+    }
+
+    // pipe to set the chosen meal clicked
+    fun setValue(string: String) {
+        repository.setValue(string)
     }
 
     fun getCategoriesFromRepository() {
-        Log.d(TAG, "in get categories size: " + categoriesArray.size.toString())
         if (categoriesArray.size == 0) {
-            CoroutineScope(Dispatchers.Default).launch {
+            CoroutineScope(Dispatchers.Main).launch {
                 val future = CoroutineScope(Dispatchers.Default).async {
                     return@async repository.getCategories()
                 }
@@ -70,6 +80,8 @@ class MyViewModel @ViewModelInject constructor(
                             categoriesArray += catItem
                         }
                     }
+                    //to test the progressbar
+                    delay(5000)
                     categoriesListResult.postValue(categoriesArray)
                 }
             }
