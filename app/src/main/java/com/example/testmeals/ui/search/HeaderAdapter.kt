@@ -23,12 +23,6 @@ class HeaderAdapter(private val mealResultList: List<MealResultItem>,
         val imageView: ImageView = view.image_recycler
         val mealTitle: TextView = view.meal_title
         val mealSubtitle: TextView = view.meal_subtitle
-//        init {
-//            view.setOnClickListener {
-//                clickListener.onItemClick()
-//            }
-//        }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeaderViewHolder {

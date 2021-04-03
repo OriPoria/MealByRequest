@@ -9,11 +9,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.example.testmeals.R
 import com.example.testmeals.common.OnItemClickListener
-import com.example.testmeals.database.MealDetailsTest
 import com.example.testmeals.databinding.FragmentResultsBinding
 import com.example.testmeals.ui.MainActivity
-import com.example.testmeals.ui.meal.MealFragment
-import com.example.testmeals.ui.meal.MealViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_results.*
 
@@ -31,7 +28,6 @@ class ResultsFragment : Fragment(), OnItemClickListener<MealResultItem> {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_results, container, false)
     }
 
@@ -52,13 +48,11 @@ class ResultsFragment : Fragment(), OnItemClickListener<MealResultItem> {
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.i(TAG, "on DESTROY")
         _binding = null
     }
 
     override fun onItemClick(item: MealResultItem) {
-        Log.i(TAG, item.name)
-        myViewModel.setValue(item.name)
+        myViewModel.setValue(item.id)
     }
 
 

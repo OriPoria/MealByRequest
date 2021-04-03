@@ -1,6 +1,7 @@
 package com.example.testmeals.database
 
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 data class MealDetails(
     val dateModified: Any,
@@ -57,4 +58,7 @@ data class MealDetails(
     val strTags: String,
     val strYoutube: String
 
+)  : Serializable
+data class MealsDetails(
+    val meals: List<MealDetails>
 )

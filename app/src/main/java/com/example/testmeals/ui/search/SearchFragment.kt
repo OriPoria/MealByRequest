@@ -42,6 +42,8 @@ class SearchFragment(): Fragment(), OnItemClickListener<CategoryResultItem> {
      private val myViewModel: MyViewModel by lazy {
          return@lazy ViewModelProvider(activity as MainActivity).get(MyViewModel::class.java)
      }
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -59,11 +61,6 @@ class SearchFragment(): Fragment(), OnItemClickListener<CategoryResultItem> {
              e.liveListSize.postValue(categories_recycler_view.adapter!!.itemCount)
              categories_recycler_view.addOnScrollListener(e)
          })
-     }
-
-     override fun onActivityCreated(savedInstanceState: Bundle?) {
-         super.onActivityCreated(savedInstanceState)
-         //change color button to black
          button.setBackgroundColor(-16777216)
          button.setOnClickListener {
              myViewModel.createViewItem = ItemSearchView()
@@ -74,6 +71,12 @@ class SearchFragment(): Fragment(), OnItemClickListener<CategoryResultItem> {
              myViewModel.getDataByName()
          }
          myViewModel.getCategoriesFromRepository()
+     }
+
+     override fun onActivityCreated(savedInstanceState: Bundle?) {
+         super.onActivityCreated(savedInstanceState)
+         //change color button to black
+
 
      }
 

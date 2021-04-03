@@ -1,24 +1,16 @@
 package com.example.testmeals.ui.meal
 
-import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.testmeals.common.NonNullLiveData
-import com.example.testmeals.database.MealDetails
-import com.example.testmeals.database.MealDetailsTest
 import com.example.testmeals.repository.MealsRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class MealViewModel @ViewModelInject constructor(
-    private val repository: MealsRepository
+@HiltViewModel
+class MealViewModel @Inject constructor(
+    repository: MealsRepository
 ) : ViewModel() {
-
+    private val TAG = "MealViewModel"
     val meal = repository.getValue()
-
-    var testvalue = MutableLiveData<String>()
-
-
-
-
-
 }

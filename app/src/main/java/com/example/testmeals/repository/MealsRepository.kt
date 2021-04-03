@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.meals.database.MealItem
 import com.example.testmeals.database.Category
+import com.example.testmeals.database.MealDetails
 
 interface MealsRepository {
     suspend fun getMealsByName(name: String) : LiveData<List<MealItem>>
@@ -14,6 +15,6 @@ interface MealsRepository {
 
     fun setValue(string: String)
 
-    fun getValue() : MutableLiveData<String>
+    fun getValue() : LiveData<MealDetails>
 
 }

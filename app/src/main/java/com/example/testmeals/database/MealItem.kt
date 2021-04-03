@@ -15,5 +15,5 @@ data class MealItem(
 )
 
 data class MealItems(
-        val meals: List<MealItem>
+    val meals: List<MealItem>
 )
